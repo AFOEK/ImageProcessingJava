@@ -12,14 +12,16 @@ import java.io.IOException;
 
 public class MainForm extends javax.swing.JFrame {
 
-    BufferedImage Image, TempImage;
+    BufferedImage Image, TempImage, FlipImage;
     File f;
 
     public MainForm() {
         initComponents();
         Image = new BufferedImage(5185, 3457, BufferedImage.TYPE_INT_RGB);
-        f = new File("D:\\TESTING.bmp\\");
-
+        //Image=new BufferedImage(853,1280,BufferedImage.TYPE_INT_RGB);
+        FlipImage = new BufferedImage(Image.getHeight(), Image.getWidth(), BufferedImage.TYPE_INT_RGB);
+        //f = new File("D:\\TESTING.bmp\\");
+        f = new File("/media/afoek/DATA/TESTING.bmp");
         //f = new File("D:\\Temp.bmp\\");
         try {
             Image = ImageIO.read(f);
@@ -30,8 +32,9 @@ public class MainForm extends javax.swing.JFrame {
 
     @Override
     public void paint(Graphics g) {
-        super.paint(g);
-        g.drawImage(Image, 0, 0, getWidth(), getHeight(), this); //windows full screen
+        //super.paint(g);
+        //g.drawImage(FlipImage, 0, 0, Image.getWidth(), Image.getHeight(), this);
+        g.drawImage(Image, 0, 0, getWidth(), getHeight(), this); //windows full screen 
         //g.drawImage(Image, 0, 0,this); //Image windowed
     }
 
@@ -74,7 +77,7 @@ public class MainForm extends javax.swing.JFrame {
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
 
-        int x, y, z, Color, a, b, alpha = 45, x0, y0, dx, dy, dw, tx, ty, xp, yp;
+        int x, y, z, Color, a, b, alpha = 45, x0, y0, dx, dy, tx, ty, xp, yp, skala = 2;
         double sudut = alpha * Math.PI / 180, sin, cos, D;
         //this.setTitle(evt.getKeyCode()+"");
         switch (evt.getKeyChar()) {
@@ -171,6 +174,11 @@ public class MainForm extends javax.swing.JFrame {
                     xp = dx;
                     yp = 0;
                 }
+                for (y = 0; y < Image.getHeight(); y++) {
+                    for (x = 0; x < Image.getWidth(); x++) {
+                        Image.setRGB(x, y, 0);
+                    }
+                }
                 for (y = 0; y < TempImage.getHeight() - 1; y++) {
                     for (x = 0; x < TempImage.getWidth() - 1; x++) {
                         sin = Math.sin(sudut);
@@ -188,10 +196,24 @@ public class MainForm extends javax.swing.JFrame {
                 this.repaint();
                 break;
             }
+            //Zoom 2x
+            case '7': {
+                TempImage = new BufferedImage(Image.getWidth() * skala, Image.getHeight() * skala, BufferedImage.TYPE_INT_RGB);
+                TempImage = CopyBufferedImage(Image);
+                for (y = 0; y < TempImage.getHeight() - 1; y++) {
+                    y0 = (int) (y / skala);
+                    for (x = 0; x < TempImage.getWidth() - 1; x++) {
+                        x0 = (int) (x / skala);
+                        Image.setRGB(x, y, TempImage.getRGB(x0, y0));
+                    }
+                }
+                this.repaint();
+                break;
+            }
         }
         //just help windows
         if (evt.getKeyCode() == 112) {
-            JOptionPane.showMessageDialog(this, "Tombol 1 untuk flip horizontal, tombol 2 untuk flip vertikal, tombol 3 untuk rotate 90 derajat, tombol 4 untuk rotate 180 derajat, tombol 5 untuk rotate 270 derajat", "Help", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Tombol 1 untuk flip horizontal, tombol 2 untuk flip vertikal, tombol 3 untuk rotate 90 derajat, tombol 4 untuk rotate 180 derajat, tombol 5 untuk rotate 270 derajat, tombol 6 untuk rotate 45 derajat, tombol 7 untuk zoom 2x", "Help", JOptionPane.INFORMATION_MESSAGE);
         }
 
     }//GEN-LAST:event_formKeyPressed
