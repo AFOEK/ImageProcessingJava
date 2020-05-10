@@ -2,11 +2,11 @@ package imageprocessingjava;
 
 import java.awt.image.BufferedImage;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import javax.imageio.ImageIO;
 import java.awt.image.*;
 import javax.swing.JOptionPane;
-import java.lang.Math.*;
 
 import java.io.IOException;
 
@@ -212,9 +212,15 @@ public class MainForm extends javax.swing.JFrame {
                 break;
             }
         }
-        //just help windows
+        //just help windows F1 button
         if (evt.getKeyCode() == 112) {
-            JOptionPane.showMessageDialog(this, "Tombol 1 untuk flip horizontal, tombol 2 untuk flip vertikal, tombol 3 untuk rotate 90 derajat, tombol 4 untuk rotate 180 derajat, tombol 5 untuk rotate 270 derajat, tombol 6 untuk rotate 45 derajat, tombol 7 untuk zoom 2x", "Help", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Tombol 1 untuk flip horizontal, tombol 2 untuk flip vertikal, tombol 3 untuk rotate 90 derajat, \ntombol 4 untuk rotate 180 derajat, tombol 5 untuk rotate 270 derajat, tombol 6 untuk rotate 45 derajat, \ntombol 7 untuk zoom 2x, tombol esc untuk keluar dari aplikasi", "Help", JOptionPane.INFORMATION_MESSAGE);
+        }
+        //esc for exit and close programme
+        if(evt.getKeyCode() == KeyEvent.VK_ESCAPE)
+        {
+            dispose();
+            System.exit(0);
         }
 
     }//GEN-LAST:event_formKeyPressed
