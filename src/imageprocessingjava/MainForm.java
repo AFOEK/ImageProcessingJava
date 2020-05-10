@@ -20,8 +20,9 @@ public class MainForm extends javax.swing.JFrame {
         Image = new BufferedImage(5185, 3457, BufferedImage.TYPE_INT_RGB);
         //Image=new BufferedImage(853,1280,BufferedImage.TYPE_INT_RGB);
         FlipImage = new BufferedImage(Image.getHeight(), Image.getWidth(), BufferedImage.TYPE_INT_RGB);
-        //f = new File("D:\\TESTING.bmp\\");
-        f = new File("/media/afoek/DATA/TESTING.bmp");
+        f = new File("D:\\TESTING.bmp\\");
+        ///f = new File("D:\\TESTING2.bmp\\");
+        //f = new File("/media/afoek/DATA/TESTING.bmp");
         //f = new File("D:\\Temp.bmp\\");
         try {
             Image = ImageIO.read(f);
